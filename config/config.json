@@ -1,0 +1,21 @@
+{
+    "NeuralNetwork": {
+      "seed": 1000000,
+      "epochs": 50,
+      "eval": 5,
+      "batch": 64,
+
+      "layer": [
+        {
+          "num_neurons": 15,
+          "activation": "Signmoid()"
+        },
+        {
+          "num_neurons": 15,
+          "activation": "Signmoid()"
+        }
+      ]
+   }
+
+
+    }
