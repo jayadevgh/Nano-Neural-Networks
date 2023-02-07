@@ -4,7 +4,7 @@ from layer import Layer, DeepNetworkLayer, NetworkLayer
 from typing import Callable, List
 
 class NeuralNetworkParser:
-    def __init__(self, config_file:"config/config.json"):
+    def __init__(self, config_file="config/config.json"):
         self.config_file = config_file
 
 
