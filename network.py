@@ -1,12 +1,11 @@
 from typing import  List
-
 from numpy import ndarray
-
 from error import Error, MSE
 from layer import Layer
-
 from optimizer import  Optimizer
 
+'''Trains the data by going through each layer and running feed_forward and backpropagation methods
+    and update the paramenters with optimize method'''
 class DeepNeuralNetwork(object):
     def __init__(self, layers: List[Layer], error: Error, seed:float):
         self.layers = layers
