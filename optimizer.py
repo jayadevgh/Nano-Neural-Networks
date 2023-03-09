@@ -1,8 +1,6 @@
 import numpy as np
 from numpy import ndarray
-
 from data import LayerData
-
 
 class Optimizer(object):
     def __init__(self, learning_rate:float=0.01):
