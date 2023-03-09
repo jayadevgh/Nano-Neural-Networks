@@ -8,6 +8,8 @@ from function import Function, LayerFunctions, WeightMultiplyFunction, BiasAddFu
 from optimizer import SGD, Optimizer
 from errors import is_same_shape
 
+'''Trains the data at specific layer by going through functions like weight multiply, bias add, and activation.
+    Each function's feed forward and back_propagation are invoked.'''
 class Layer(object):
 
     def __init__(self,
