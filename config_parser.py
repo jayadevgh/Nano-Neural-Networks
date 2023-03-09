@@ -1,4 +1,3 @@
-
 import json
 
 from function import LayerFunctions
@@ -11,7 +10,8 @@ from function import LinearFunction
 
 from network import DeepNeuralNetwork
 
-
+'''Deep neural networks can be highly configured. Number of layers, and
+neurons can be added through configuration file config.json'''
 class NetworkParser:
     def __init__(self, config_file="config/config.json"):
         self.config_file = config_file
