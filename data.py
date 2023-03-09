@@ -1,7 +1,7 @@
 from typing import Callable, List
 from numpy import ndarray
 
-
+'''Repository of all the data at layer level.'''
 class LayerData(object):
 
     def __init__(self,

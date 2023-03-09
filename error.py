@@ -2,6 +2,7 @@ from typing import Callable, List
 import numpy as np
 from numpy import ndarray
 
+'''Currently error calculations are done using MSE'''
 class Error(object):
     def __init__(self):
       pass

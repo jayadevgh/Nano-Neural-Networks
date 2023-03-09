@@ -7,7 +7,8 @@ from data import LayerData
 from optimizer import Optimizer
 
 '''Core functionality for weight multiplication, bias addition, and sigmod function is included. 
-    All these functions are being managed through LayerFunctions object.'''
+    All these functions are being managed through LayerFunctions object. '''
+'''More activation functions need to be added.'''
 class Function(object):
     def __init__(self):
        pass

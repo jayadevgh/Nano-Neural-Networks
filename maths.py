@@ -3,7 +3,7 @@ import numpy as np
 from numpy import ndarray
 from typing import Callable, List
 
-
+'''Math function implementations with Tensor object.'''
 def sigmoid(input: Tensor) -> Tensor:
     data:ndarray = np.copy(input.data)
     np_data = 1 / (1 + np.exp(-data))
