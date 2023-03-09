@@ -1,4 +1,3 @@
-from DeepMath import tensor
 from tensor import Tensor
 import numpy as np
 from numpy import ndarray

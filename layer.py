@@ -2,47 +2,58 @@ from typing import Callable, List
 import numpy as np
 from numpy import ndarray
 
-from function import Function, WeightAndBiasFunction
-from optimizer import SGD
+from data import LayerData
+from error import Error
+from function import Function, LayerFunctions, WeightMultiplyFunction, BiasAddFunction, LinearFunction
+from optimizer import SGD, Optimizer
 from errors import is_same_shape
 
 class Layer(object):
-    '''
-    A "layer" takes the input data and transforms the data through series of functions
-    '''
 
     def __init__(self,
-                 num_neurons: int):
+                 data: LayerData, activation: Function, functions: LayerFunctions, seed : int):
 
-        self.num_neurons = num_neurons
-        self.functions: List[Function] = []
+        self.data = data
+        self.functions = functions
+        self.activation = activation
+        self.seed = seed
 
-    def _setup(self) -> None:
-        '''
-        The setup must be implemented at subclasses. Mostly setup the input data, and parameter data
-        '''
-        raise NotImplementedError()
 
-    def forward(self, input: ndarray) -> ndarray:
-        '''
-        Transforms the input through a series of functions
-        '''
+    def setup(self, input: ndarray) -> None:
 
-        for function in self.functions:
-            input = function(input)
+        np.random.seed(self.seed)
 
-        return input
 
-    def backward(self, grad: ndarray) -> ndarray:
-        '''
-        Takes the gradients from the next layer and passes through functions in reverse order.
-        Calculate both input gradient, and weight and bias gradients at every layer.
-        '''
 
-        for function in reversed(self.functions):
-            output_grad = function.backward(output_grad)
+        # weights
+        self.data.parameters.append(np.random.randn(input.shape[1], self.data.neurons))
+        # print("In setup input size:", input.shape, "params size", (self.data.parameters[0]).shape,
+        #       "neurons", self.data.neurons)
 
-        return output_grad
+        # bias
+        self.data.parameters.append(np.random.randn(1, self.data.neurons))
+        # print("Bias Size", (self.data.parameters[1]).shape)
+
+        self.functions.functions = [WeightMultiplyFunction(self.data.parameters[0]),
+                                    BiasAddFunction(self.data.parameters[1]), self.activation]
+
+        return None
+
+    def feed_forward(self, input: ndarray) -> ndarray:
+        if len(self.data.parameters) == 0:
+            #print("Setting up weights and biases")
+            self.setup(input)
+        setattr(self.functions, "data", self.data)
+        output = self.functions.feed_forward(input, self.data)
+
+        return output
+
+    def back_propagate(self, grads: ndarray) -> ndarray:
+        setattr(self.functions, "data", self.data)
+        input_grads = self.functions.back_propagate(grads)
+        self.data.input_grads = input_grads
+
+        return input_grads
 
     # def _param_grads(self) -> ndarray:
     #     '''
@@ -64,42 +75,16 @@ class Layer(object):
     #         if issubclass(operation.__class__, ParamOperation):
     #             self.params.append(operation.param)
 
-class NetworkLayer(Layer):
-    def __init__(self, num_neurons: int, activation:Function):
-        super.__init__(num_neurons)
-        self.activation = activation
-
-
-    def setup(self,  input):
-        weights = np.random.randn(input.shape[1], self.num_neurons)
-        bias = np.random.randn(1, self.num_neurons)
-
-        self.functions = [WeightAndBiasFunction(input, weights, bias, SGD()),self.activation]
-
-
-class DeepNetworkLayer(object):
-    def __init__(self, layers: List[Layer], seed:float):
-        self.layers = layers
-        self.seed = seed
-
-    def forward(self, input:ndarray) -> input:
-        for layer in self.layers:
-            input = layer.forward(input)
-
-        return input
-
-    def backward(self, input: ndarray) -> input:
-        temp = input
-        for layer in reversed(self.layers):
-            temp = layer.backward(temp)
-
-        return temp
-
-
-
-
-
-
-
-
+# class NetworkLayer(Layer):
+#     def __init__(self, num_neurons: int, activation:Function):
+#         super.__init__(num_neurons)
+#         self.activation = activation
+#
+#
+#     def setup(self,  input):
+#         weights = np.random.randn(input.shape[1], self.num_neurons)
+#         bias = np.random.randn(1, self.num_neurons)
+#
+#         self.functions = [WeightAndBiasFunction(input, weights, bias, SGD()),self.activation]
+#
 

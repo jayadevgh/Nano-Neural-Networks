@@ -1,18 +1,26 @@
 {
     "NeuralNetwork": {
-      "seed": 1000000,
-      "epochs": 50,
-      "eval": 5,
-      "batch": 64,
+      "seed": 799888,
+      "epochs": 64,
+      "eval_freq": 8,
+      "batch": 32,
+      "lr": 0.01,
+      "test_size": 0.25,
+      "optimizer": "SGD",
+      "error": "MSE",
 
       "layer": [
         {
-          "num_neurons": 15,
-          "activation": "Signmoid()"
+          "num_neurons": 16,
+          "activation": "SigmoidFunction"
         },
         {
-          "num_neurons": 15,
-          "activation": "Signmoid()"
+          "num_neurons": 16,
+          "activation": "SigmoidFunction"
+        },
+        {
+          "num_neurons": 1,
+          "activation": "LinearFunction"
         }
       ]
    }

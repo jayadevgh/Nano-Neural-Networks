@@ -3,26 +3,26 @@ import numpy as np
 from numpy import ndarray
 
 class Error(object):
-    def __init__(self, prediction:ndarray, target:ndarray):
-        self.prediction = prediction
-        self.target = target
+    def __init__(self):
+      pass
 
-    def forward(self) -> float:
+    def feed_forward(self, prediction:ndarray, target:ndarray) -> float:
         raise NotImplementedError
 
-    def backward(self):
+    def back_propagate(self, prediction:ndarray, target:ndarray):
         raise NotImplementedError
 
 
 class MSE(Error):
-    def __init__(self, prediction: ndarray, target: ndarray):
-        super.__init__(prediction, target)
+    def __init__(self):
+        super().__init__()
 
-    def forward(self) -> float:
-       return np.sum(np.power(self.target - self.prediction, 2)) / self.target.shape[0]
+    def feed_forward(self, prediction:ndarray, target:ndarray) -> float:
+        err = np.sum(np.power(target - prediction, 2)) / target.shape[0]
+        return err
 
-    def backward(self)->ndarray :
-        return 2.0 * (self.target - self.prediction) / self.target.shape[0]
+    def back_propagate(self, prediction:ndarray, target:ndarray)->ndarray :
+        return 2.0 * (prediction - target) / prediction.shape[0]
 
 
 
