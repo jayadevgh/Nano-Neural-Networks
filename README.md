@@ -1,5 +1,5 @@
 Highly configurable deep learning functionality is implemented  from scratch using Python's numpy package. There is no support for GPU and automatic differentiation. 
-Though it is a simplest deep learning implementation without any bells and whistles, a real world deep learning model is created for CA housing prices.
+Though it is a simple deep learning implementation without any bells and whistles, a real world deep learning model is created for CA housing prices.
 I will add more examples later. It is an excellent way to learn deep learning. 
 
 I learned deep learning through the following resources. 
